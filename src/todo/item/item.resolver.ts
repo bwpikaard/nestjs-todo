@@ -16,23 +16,17 @@ export class ItemResolver {
 
     @Query(() => Item)
     async item(@Args("id", {type: () => Int}) id: number): Promise<Item> {
-        const item = this.itemService.findOneById(id);
-
-        return item;
+        return this.itemService.findOneById(id);
     }
 
     @Query(() => [Item])
     async items(@Args("name", {nullable: true}) name?: string, @Args("listId", {nullable: true}) listId?: number): Promise<Item[]> {
-        const items = this.itemService.findAll({name, listId});
-
-        return items;
+        return this.itemService.findAll({name, listId});
     }
 
     @Mutation(() => Item)
     async insertItem(@Args("name") name: string, @Args("listId") listId: number): Promise<Item> {
-        const item = this.itemService.create(name, listId);
-
-        return item;
+        return this.itemService.create(name, listId);
     }
 
     @ResolveField()

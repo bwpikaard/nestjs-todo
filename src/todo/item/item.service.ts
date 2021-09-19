@@ -3,18 +3,20 @@ import {InjectRepository} from "@nestjs/typeorm";
 import {isUndefined, pickBy} from "lodash";
 import {Repository} from "typeorm";
 
+import {ListDAO} from "../list/list.dao";
 import {ItemDAO} from "./item.dao";
 import type {Item} from "./item.model";
 import type {ItemQuery} from "./item.service.types";
 
 @Injectable()
 export class ItemService {
-    constructor(@InjectRepository(ItemDAO) private itemRepository: Repository<ItemDAO>) {}
+    constructor(
+        @InjectRepository(ItemDAO) private itemRepository: Repository<ItemDAO>,
+        @InjectRepository(ListDAO) private listRepository: Repository<ListDAO>,
+    ) {}
 
     async findOneById(id: number): Promise<Item> {
-        const item = this.itemRepository.findOneOrFail(id);
-
-        return item;
+        return this.itemRepository.findOneOrFail(id);
     }
 
     async findAll(query?: ItemQuery): Promise<Item[]> {
@@ -25,7 +27,8 @@ export class ItemService {
     }
 
     async create(name: string, listId: number): Promise<Item> {
-        const item = this.itemRepository.create({name, listId});
+        const list = await this.listRepository.findOneOrFail(listId);
+        const item = this.itemRepository.create({name, list});
 
         await this.itemRepository.save(item);
         return item;

@@ -12,9 +12,7 @@ export class ListService {
     constructor(@InjectRepository(ListDAO) private listRepository: Repository<ListDAO>) {}
 
     async findOneById(id: number): Promise<List> {
-        const list = await this.listRepository.findOneOrFail(id);
-
-        return list;
+        return this.listRepository.findOneOrFail(id);
     }
 
     async findAll(query?: ListQuery): Promise<List[]> {

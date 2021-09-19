@@ -16,23 +16,17 @@ export class ListResolver {
 
     @Query(() => List)
     async list(@Args("id", {type: () => Int}) id: number): Promise<List> {
-        const list = this.listService.findOneById(id);
-
-        return list;
+        return this.listService.findOneById(id);
     }
 
     @Query(() => [List])
     async lists(): Promise<List[]> {
-        const lists = await this.listService.findAll();
-
-        return lists;
+        return this.listService.findAll();
     }
 
     @Mutation(() => List)
     async insertList(@Args("name") name: string): Promise<List> {
-        const list = this.listService.create(name);
-
-        return list;
+        return this.listService.create(name);
     }
 
     @ResolveField(() => [Item])

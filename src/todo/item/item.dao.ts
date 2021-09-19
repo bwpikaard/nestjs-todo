@@ -4,9 +4,7 @@ import {
 
 import {ListDAO} from "../list/list.dao";
 
-@Entity("item", {
-    name: "item",
-})
+@Entity("item")
 export class ItemDAO {
     @PrimaryGeneratedColumn()
     id: number;

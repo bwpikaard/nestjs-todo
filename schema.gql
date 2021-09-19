@@ -1,0 +1,28 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type List {
+  id: Int!
+  name: String!
+  items: [Item!]!
+}
+
+type Item {
+  id: Int!
+  name: String!
+  listId: Int!
+  list: List!
+}
+
+type Query {
+  item(id: Int!): Item!
+  items(listId: Float, name: String): [Item!]!
+  list(id: Int!): List!
+  lists: [List!]!
+}
+
+type Mutation {
+  insertItem(listId: Float!, name: String!): Item!
+  insertList(name: String!): List!
+}
